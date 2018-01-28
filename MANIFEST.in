@@ -1,0 +1,3 @@
+graft sushi_app/templates
+graft sushi_app/static
+include sushi_app/schema.sql

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block body %}
+        <main role="main" class="container">
+                <h1 id=title class="text-primary"></h1>
+                <p>Ciao, benvenuto al modulo del sushi.</p>
+                <form method="post" action='/submit' id=form>
+                        <div class="form-group">
+                                <label class="text-info" for=ristorante>Chi sei?</label>
+                                <select class="form-control" id=user name=user>
+                                        {% for user in users %}
+                                        <option value="{{user.userid}}">{{user.nome}}</option>
+                                        {% endfor%}
+                                </select>
+                        </div>
+                        <div class="form-group">
+                                <label class="text-info" for=ristorante>Scegli in quali ristoranti preferiresti andare
+                                        (è possibile scegliere più di una risposta premendo Ctrl o Cmd):</label>
+                                <select class="form-control" multiple id=ristorante name=ristorante>
+                                        {% for rist in ristoranti %}
+                                        <option value="{{rist.ristid}}">{{rist.nome}}</option>
+                                        {% endfor %}
+                                </select>
+                        </div>
+                        <div class="form-group">
+                                <label class="text-info">Preferisci pranzo o cena?</label>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="quando" id="pranzo" value="pranzo">
+                                  <label class="form-check-label" for="pranzo">
+                                    Pranzo
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="quando" id="cena" value="cena" checked>
+                                  <label class="form-check-label" for="cena">
+                                    Cena
+                                  </label>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="text-info" for='calendar'>Scegli le date che preferisci:</label>
+                                <div id=calendar class="mb-4 text-center"></div>
+
+                        </div>
+                        <div class="form-group">
+                                <button type="button" onclick="select_all()" class="btn btn-secondary col-sm-2">Seleziona tutto</button>
+                                <button type="button" onclick="deselect_all()" class="btn btn-secondary col-sm-2">Deseleziona tutto</button>
+                                <button type="button" onclick="invert_selection()" class="btn btn-secondary col-sm-2">Inverti selezione</button>
+                                <button type="button" onclick="_submit()" class="btn btn-primary float-right col-sm-1">Invia</button>
+                        </div>
+                        <input type="text" class="form-control invisible" name="month" id="month" value="{{"%04d%02d"%calendar}}"/>
+                        <input type="text" class="form-control invisible" name="days" id="days"/>
+                </form>
+
+        </main>
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+        <script src="{{ url_for('static', filename='sushi.js')}}"></script>
+        <script>{{ "calendar(%s,%s)" % calendar }}</script>
+{% endblock %}
